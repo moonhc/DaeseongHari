@@ -153,6 +153,9 @@ function resize_all()
 $(window).resize(resize_all);
 $(window).ready(function() {
     resize_all();
+    $('#fullpage').fullpage({
+        scrollingSpeed: 400,
+    });
 });
 
 $(document).keydown(function(e) {
