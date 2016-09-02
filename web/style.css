@@ -6,7 +6,9 @@ html,body{
 }
 
 .container {
-    overflow: hidden;
+    height: 100%;
+    width: 70%;
+    overflow: auto;
 }
 
 .floor {
@@ -16,6 +18,7 @@ html,body{
 
 .f1 {
     background-image: url("G1.jpg");
+    margin-bottom: 10%;
 }
 
 .f2 {
@@ -26,12 +29,15 @@ html,body{
     background-image: url("G3.jpg");
 }
 
-.room {
+.sensor {
     position: absolute;
     opacity: 0.5;
-    background-color: red;
-    border-radius: 100px;
-    width: 100px;
-    height: 100px;
     transform: translate(-50%, -50%);
+}
+
+.static {
+    background-color: rgb(140, 135, 27);
+    border-radius: 20px;
+    width: 20px;
+    height: 20px;
 }

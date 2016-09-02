@@ -36,21 +36,26 @@ function draw_floor(name)
             var px = (401.64 + 0.039 * r.x) * bg_w / 2000;
             var py = (1026.786 - 0.04 * r.y) * bg_h / 1150;
         }
-        var e = $("<div></div>");
-        var pr = 30 * bg_w / pic_w;
+        if (r.y == 6300)
+            var e = $('<img src="black.gif"/>');
+        else
+            var e = $('<img src="red.gif"/>');
+        var pr = 200 * bg_w / pic_w;
         e.css('top', py + 'px');
         e.css('left', px + 'px');
         e.css('width', pr + 'px');
-        e.css('height', pr + 'px');
-        e.css('border-radius', pr + 'px');
-        e.addClass("room");
+        e.addClass("sensor");
+        if (r.x == 4700)
+            e.css('opacity', '1');
+        else if (r.x == 9500)
+            e.css('opacity', '0.75');
         p.append(e);
     }
 }
 
-function draw_rooms()
+function draw_all()
 {
-    $(".room").remove();
+    $(".sensor").remove();
     draw_floor('f1');
     draw_floor('f2');
 }
@@ -59,6 +64,8 @@ function scale()
 {
     var scr_w = $(window).width();
     var scr_h = $(window).height();
+    scr_w = $(".container").width();
+    scr_h = $(".container").height();
     var e = $(".floor");
 
     var w, h;
@@ -81,7 +88,7 @@ function scale()
 function resize_all()
 {
     scale();
-    draw_rooms();
+    draw_all();
 }
 
 function change_floor()
