@@ -1,27 +1,44 @@
 var pic_w = 2000;
 var pic_h = 1150;
 var bg_w, bg_h;
+var time = 0;
 
+// t=0 if heat sensor / t=1 if smoke sensor
 var coord = {
     f1: [
-    {x: 6400, y: 19200}
+    {t: 0, x: 6400, y: 19200}
     ],
 
     f2: [
-    {x: 4700, y: 6300},
-    {x: 9000, y: 6300},
-    {x: 6400, y: 16900},
-    {x: 19200, y: 11600},
-    {x: 4450, y: 1800},
-    {x: 9500, y: 2900},
-    {x: 4700, y: 9900},
-    {x: 4700, y: 12900},
-    {x: 7400, y: 10500},
-    {x: 7400, y: 12300},
+    {t: 0, x: 4700, y: 6300},
+    {t: 1, x: 9000, y: 6300},
+    {t: 0, x: 6400, y: 16900},
+    {t: 0, x: 19200, y: 11600},
+    {t: 1, x: 4450, y: 1800},
+    {t: 0, x: 9500, y: 2900},
+    {t: 0, x: 4700, y: 9900},
+    {t: 0, x: 4700, y: 12900},
+    {t: 0, x: 7400, y: 10500},
+    {t: 0, x: 7400, y: 12300},
     ]
 };
 
-function draw_floor(name)
+var frame = {
+    f1: [
+        [0],
+        [1],
+        [1],
+        [1]
+    ],
+    f2: [
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,1,0,0,0,0,0,0,0,0],
+        [0,1,1,1,0,0,0,0,0,0],
+        [0,1,1,1,1,1,0,0,0,0]
+    ]
+};
+
+function draw_floor(name, frame)
 {
     var p = $(".floor." + name);
     var c = coord[name];
@@ -36,8 +53,10 @@ function draw_floor(name)
             var px = (401.64 + 0.039 * r.x) * bg_w / 2000;
             var py = (1026.786 - 0.04 * r.y) * bg_h / 1150;
         }
-        if (r.y == 6300)
-            var e = $('<img src="black.gif"/>');
+        if (frame[i] == 0)
+            continue;
+        if (r.t)
+            var e = $('<img src="yellow.gif"/>');
         else
             var e = $('<img src="red.gif"/>');
         var pr = 200 * bg_w / pic_w;
@@ -53,11 +72,11 @@ function draw_floor(name)
     }
 }
 
-function draw_all()
+function draw_frame(time)
 {
     $(".sensor").remove();
-    draw_floor('f1');
-    draw_floor('f2');
+    draw_floor('f1', frame.f1[time]);
+    draw_floor('f2', frame.f2[time]);
 }
 
 function scale()
@@ -88,28 +107,22 @@ function scale()
 function resize_all()
 {
     scale();
-    draw_all();
-}
-
-function change_floor()
-{
+    draw_frame(2);
 }
 
 $(window).resize(resize_all);
 $(window).ready(function() {
-    change_floor();
     resize_all();
 });
 
-/*
 $(document).keydown(function(e) {
     if (e.keyCode == 37) {
-        floor = ((floor - 1) - 1) % 3 + 1;
+        time -= 1;
     }
     else if (e.keyCode == 39) {
-        floor = ((floor - 1) + 1) % 3 + 1;
+        time += 1;
     }
     else return;
-    change_floor();
+    draw_frame(time);
+    console.log(time);
 });
-*/
