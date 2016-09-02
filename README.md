@@ -7,5 +7,5 @@
 > * Daeseong.Kim
 > * Hyongchol.Moon
 > * Jaewook.Woo
-> * Yunjong.Jung
+> * Yunjong.Jeong
 > * Sooyoung.Park
