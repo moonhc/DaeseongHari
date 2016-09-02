@@ -14,12 +14,16 @@ html,body{
     background-size: 100%;
 }
 
-.floor1 {
+.f1 {
     background-image: url("G1.jpg");
 }
 
-.floor2 {
+.f2 {
     background-image: url("G2.jpg");
+}
+
+.f3 {
+    background-image: url("G3.jpg");
 }
 
 .room {
