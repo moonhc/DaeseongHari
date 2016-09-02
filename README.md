@@ -8,4 +8,4 @@
 > * Hyongchol.Moon
 > * Jaewook.Woo
 > * Yunjong.Jung
-> * Suyeong.Park
+> * Sooyoung.Park
