@@ -5,10 +5,11 @@ sensors = []
 GRID=500
 
 class Sensor:
-    def __init__(self, x, y, z):
+    def __init__(self, x, y, z, typ):
         self.x = x
         self.y = y
         self.z = z
+        self.typ = typ
         self.status = 0
     def update_status(self, new_stat):
         self.status += new_stat
@@ -21,6 +22,7 @@ class Building:
     def ignite(self, x, y, z):
         self.fire_origin = (x, y, z)
         self.graph[0][0][0].fire = True
+        self.graph[0][0][0].smoke = True
 
 class Vertex:
     def __init__(self,x,y,z):
@@ -30,13 +32,13 @@ class Vertex:
         self.fire = False
         self.smoke = False
         self.fire_count = 2 #time required for fire to spread (seconds)
-        self.smoke_count = 3 #time required for smoke to spread (seconds)
+        self.smoke_count = 1 #time required for smoke to spread (seconds)
         self.adjacent_vertices = []
     def ignite(self):
         if not self.fire:
             self.fire = True
             #print "%d, %d: ignited" %(self.x, self.y)
-    def smoke(self):
+    def push_smoke(self):
         if not self.smoke:
             self.smoke = True
     def update(self):
@@ -55,7 +57,7 @@ class Vertex:
             vertex.ignite()
     def spread_smoke(self):
         for vertex in self.adjacent_vertices:
-            vertex.smoke()
+            vertex.push_smoke()
 
 vertices = []
 floor1 = []
@@ -109,7 +111,7 @@ vertices.append(floor1)
 vertices.append(floor2)
 vertices.append(floor3)
 
-sensors = [Sensor(6400, 19200, 0), Sensor(5100, 19200, 0), Sensor(4200, 2000, 0), Sensor(4500, 6300, 0), Sensor(8800, 6300, 0), Sensor(8800, 2900, 0), Sensor(4400, 10000, 0), Sensor(11000, 11000, 0), Sensor(12050, 11000,0), Sensor(20000, 11000, 0), Sensor(20000, 19000, 0), Sensor(27000, 11000, 0), Sensor(27000, 19000, 0), Sensor(400,100,0)]
+sensors = [Sensor(6400, 19200, 0, 1), Sensor(5100, 19200, 0, 0), Sensor(4200, 2000, 0, 0), Sensor(4500, 6300, 0, 0), Sensor(8800, 6300, 0, 0), Sensor(8800, 2900, 0, 0), Sensor(4400, 10000, 0, 0), Sensor(11000, 11000, 0, 0), Sensor(12050, 11000,0, 1), Sensor(20000, 11000, 0, 0), Sensor(20000, 19000, 0, 0), Sensor(27000, 11000, 0, 0), Sensor(27000, 19000, 0, 0), Sensor(23500,15500,0, 1)]
 
 building = Building(vertices, sensors)
 
@@ -125,8 +127,10 @@ def start_simulation(building, fire_origin_x, fire_origin_y, fire_origin_z):
         for sensor in building.sensors:
             for row in building.graph[sensor.z]:
                 for vertex in row:
-                    if vertex.fire and math.sqrt((vertex.x - sensor.x)**2 + (vertex.y - sensor.y)**2) < GRID:
+                    if sensor.typ == 0 and vertex.fire and math.sqrt((vertex.x - sensor.x)**2 + (vertex.y - sensor.y)**2) < GRID:
                         sensor.update_status(1)
+                    if sensor.typ == 1 and vertex.smoke and math.sqrt((vertex.x - sensor.x)**2 + (vertex.y - sensor.y)**2) < GRID:
+						sensor.update_status(1)
             if tick % step == 0:
                 print '%4d,' % sensor.status,
         if tick % step == 0:
