@@ -186,7 +186,7 @@ var frame = {
     ],
 };
 
-function draw_floor(name, frame)
+function draw_floor(name, time)
 {
     var p = $(".floor." + name);
     var c = coord[name];
@@ -205,7 +205,9 @@ function draw_floor(name, frame)
             var px = (473 + 0.043 * r.x) * bg_w / 2000;
             var py = (1032 - 0.0396 * r.y) * bg_h / 1150;
         }
-        if (frame[i] == 0) continue;
+        if (frame[name][time][i] == 0) continue;
+        if (time > 1 && frame[name][time-1][i] == 0)
+            $('.doubleBeep').trigger('play');
         if (r.t)
             var e = $('<img src="yellow.gif"/>');
         else
@@ -214,6 +216,7 @@ function draw_floor(name, frame)
         e.css('top', py + 'px');
         e.css('left', px + 'px');
         e.css('width', pr + 'px');
+        e.css('opacity', Math.min(1, frame[name][time][i] / 1000.0 + 0.3));
         e.addClass("sensor");
         p.append(e);
     }
@@ -222,7 +225,7 @@ function draw_floor(name, frame)
 function draw_frame(time)
 {
     $(".sensor").remove();
-    draw_floor('f1', frame.f1[time]);
+    draw_floor('f1', time);
 //    draw_floor('f2', frame.f2[time]);
 //    draw_floor('f3', frame.f2[time]);
 }
@@ -270,6 +273,7 @@ function play()
 {
     draw_frame(time);
     time++;
+    $(".beep").trigger('play');
     setTimeout(play, 1000);
 }
 
