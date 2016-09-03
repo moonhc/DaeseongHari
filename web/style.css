@@ -64,3 +64,10 @@ div#slide {
     opacity: 1;
     color: white;
 }
+
+#buttons {
+    float: left;
+    position: fixed;
+    bottom: 0;
+    padding: 30px;
+}

@@ -3,6 +3,7 @@ var pic_h = 1150;
 var bg_w, bg_h;
 var time = 0;
 var beep_count = 0;
+var mute = false;
 
 // t=0 if heat sensor / t=1 if smoke sensor
 var coord = {
@@ -785,8 +786,8 @@ function draw_floor(name, time)
         if (frame[name][time][i] == 0) continue;
         beep_count += 1;
         if (time > 1 && frame[name][time-1][i] == 0) {
-            console.log("new");
-            $('.doubleBeep').trigger('play');
+            if (!mute)
+                $('.doubleBeep').trigger('play');
         }
         if (r.t)
             var e = $('<img src="yellow.gif"/>');
@@ -855,13 +856,14 @@ function play()
     draw_frame(time);
     if (time < frame.f1.length - 1)
         time++;
-    setTimeout(play, 500);
+    setTimeout(play, 700);
 }
 
 function beep()
 {
     if (beep_count > 0)
-        $(".beep").trigger('play');
+        if (!mute)
+            $(".beep").trigger('play');
     var dt = 500 / Math.log(beep_count/1.5 + 2) + 500;
     setTimeout(beep, dt);
 }
@@ -885,6 +887,15 @@ function clock()
 $(window).resize(resize_all);
 $(window).on('hashchange', function() {
     show_floor();
+});
+$('#mute').click(function() {
+    if (!mute) {
+        mute = true;
+        $('#mute').text('Sound ON');
+    } else {
+        mute = false;
+        $('#mute').text('Sound OFF');
+    }
 });
 $(window).ready(function() {
     resize_all();
