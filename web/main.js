@@ -206,8 +206,10 @@ function draw_floor(name, time)
             var py = (1032 - 0.0396 * r.y) * bg_h / 1150;
         }
         if (frame[name][time][i] == 0) continue;
-        if (time > 1 && frame[name][time-1][i] == 0)
+        if (time > 1 && frame[name][time-1][i] == 0) {
+            console.log("new");
             $('.doubleBeep').trigger('play');
+        }
         if (r.t)
             var e = $('<img src="yellow.gif"/>');
         else
