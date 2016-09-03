@@ -11,9 +11,11 @@ html,body{
 }
 
 .fullh {
-    min-height: 100%;
-    overflow: auto;
     height: 100%;
+}
+
+.row {
+    height: 80%;
 }
 
 .frame {
