@@ -175,6 +175,7 @@ for sensor_data in floor3_sensors.split('},'):
 
 building = Building(vertices, sensors)
 
+import sys
 def start_simulation(building, fire_origin_x, fire_origin_y, fire_origin_z):
     building.ignite(fire_origin_x, fire_origin_y, fire_origin_z)
     tick = 0
@@ -197,6 +198,8 @@ def start_simulation(building, fire_origin_x, fire_origin_y, fire_origin_z):
             if tick % step == 0:
                 print ''
             tick += 1
+        print ''
+        sys.stdout.flush()
 def main():
     start_simulation(building, 0, 0, 0)
 
