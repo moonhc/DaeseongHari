@@ -46,8 +46,9 @@ html,body{
     position: relative;
     float: right;
     margin: 10px;
-    font-size: 2em;
+    font-size: 1.7em;
     z-index: 200;
     background-color: lightgray;
     padding: 5px;
+    width: 4em;
 }

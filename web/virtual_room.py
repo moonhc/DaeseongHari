@@ -116,7 +116,7 @@ building = Building(vertices, sensors)
 def start_simulation(building, fire_origin_x, fire_origin_y, fire_origin_z):
     building.ignite(fire_origin_x, fire_origin_y, fire_origin_z)
     tick = 0
-    step = 5
+    step = 1
     while True:
         for floor in building.graph:
             for row in floor:
