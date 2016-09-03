@@ -255,26 +255,37 @@ function scale()
 function resize_all()
 {
     scale();
-    draw_frame(2);
+    draw_frame(time);
 }
 
 function show_floor()
 {
-    $('#menu').text(location.hash.slice(1) + '층');
+    if (location.hash === "")
+        $('#menu').text('3F');
+    else
+        $('#menu').text(location.hash.slice(1) + 'F');
+}
+
+function play()
+{
+    draw_frame(time);
+    time++;
+    setTimeout(play, 1000);
 }
 
 $(window).resize(resize_all);
+$(window).on('hashchange', show_floor);
 $(window).ready(function() {
     resize_all();
+    show_floor();
     $('#fullpage').fullpage({
         scrollingSpeed: 400,
         anchors: ['3','2','1'],
         slidesNavigation: true,
         navigation: true,
     });
-    show_floor();
+    play();
 });
-$(window).on('hashchange', show_floor);
 
 $(document).keydown(function(e) {
     if (e.keyCode == 37) {
