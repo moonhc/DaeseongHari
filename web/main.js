@@ -258,13 +258,23 @@ function resize_all()
     draw_frame(2);
 }
 
+function show_floor()
+{
+    $('#menu').text(location.hash.slice(1) + '층');
+}
+
 $(window).resize(resize_all);
 $(window).ready(function() {
     resize_all();
     $('#fullpage').fullpage({
         scrollingSpeed: 400,
+        anchors: ['3','2','1'],
+        slidesNavigation: true,
+        navigation: true,
     });
+    show_floor();
 });
+$(window).on('hashchange', show_floor);
 
 $(document).keydown(function(e) {
     if (e.keyCode == 37) {
