@@ -466,7 +466,8 @@ function play()
     if (time < frame.f1.length)
         time++;
     $(".beep").trigger('play');
-    setTimeout(play, 500 / Math.log(beep_count/1.5 + 1) + 500);
+    var dt = 500 / Math.log(beep_count/1.5 + 2) + 500;
+    setTimeout(play, dt);
 }
 
 function checkTime(i) {
@@ -486,7 +487,9 @@ function clock()
 }
 
 $(window).resize(resize_all);
-$(window).on('hashchange', show_floor);
+$(window).on('hashchange', function() {
+    show_floor();
+});
 $(window).ready(function() {
     resize_all();
     show_floor();
@@ -499,16 +502,4 @@ $(window).ready(function() {
     });
     play();
     clock();
-});
-
-$(document).keydown(function(e) {
-    if (e.keyCode == 37) {
-        time -= 1;
-    }
-    else if (e.keyCode == 39) {
-        time += 1;
-    }
-    else return;
-    draw_frame(time);
-    console.log(time);
 });
