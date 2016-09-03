@@ -48,4 +48,6 @@ html,body{
     margin: 10px;
     font-size: 2em;
     z-index: 200;
+    background-color: lightgray;
+    padding: 5px;
 }
