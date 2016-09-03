@@ -24,14 +24,25 @@
     </div>
     <div id="buttons">
       <button id="mute">Sound OFF</button>
-    </div>
+	</div>
+	<ul id="series">
+			<li id="fire" class="series_item"><img src="fire_sign.png" class="series_img"/> : 열감지센서</li>
+			<li id="smoke" class="series_item"><img src="smoke_sign.png" class="series_img"/> : 연기감지센서</li>
+	</ul>
     <div id="fullpage" class="container">
       <div id="section0" class="section floor f3"></div>
       <div id="section1" class="section floor f2"></div>
       <div id="section2" class="section floor f1"></div>
-    </div>
+	</div>
+	<p style="width:300px">
+	    <input class="mdl-slider mdl-js-slider" type="range" id="s1" min="0" max="10" value="4" step="2">
+	</p>
+	</div>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.2.0/material.min.js"></script>
     <script src="jquery-3.1.0.min.js"></script>
-    <script src="jquery.fullpage.min.js"></script>
+	<script src="jquery.fullpage.min.js"></script>
     <script src="main.js"></script>
     <audio class="beep" controls>
       <source src="beep-06.wav" type="audio/wav">
